@@ -1,0 +1,14 @@
+package com.huainian.eduonline;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class EduOnlineApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(EduOnlineApplication.class, args);
+	}
+
+}
+
