@@ -5,6 +5,9 @@
  */
 package com.huainian.eduonline.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -20,103 +23,111 @@ public class JsonData implements Serializable{
 	
 	private String message;
 	
-	private String code;
+	private int code;
 	
 	private Object data;
 	
 	private HashMap<String, Object> multiData = new HashMap<>();
 	
-	public JsonData() {
+	protected JsonData() {
 		
 	}
 	
-	public JsonData(String code,String message,Object data) {
-		super();
-		this.code = code;
-		this.message = message;
-		this.data = data;
+	protected JsonData(ResultOptions option,String ... messages) {
+		String msg = option.getMsg();
+		if (messages != null && messages.length > 0){
+			msg = messages[0];
+		}
+		this.code = option.getCode();
+		this.message = msg;
 	}
-	public static JsonData buildSuccess() {
-		JsonData jsonData = new JsonData();
-		jsonData.code = "200";
-		jsonData.message = "操作成功！";
-		return jsonData;
-	}
-	public static JsonData buildFailure() {
-		JsonData jsonData = new JsonData();
-		jsonData.code = "201";
-		jsonData.message ="服务器异常";
-		return  jsonData;
-	}
-	public static JsonData data(Object object) {
-		JsonData jsonData = new JsonData();
-		jsonData.code = "200";
-		jsonData.message = "操作成功！";
-		jsonData.data = object;
-		return jsonData;
-	}
-	public static JsonData multiData(String str,Object object) {
-		JsonData jsonData = new JsonData();
-		jsonData.code = "200";
-		jsonData.message = "操作成功！";
-		jsonData.multiData.put(str, object);
-		return jsonData;
-	}
-
-	/**
-	 * @return the message
-	 */
 	public String getMessage() {
 		return message;
 	}
 
-	/**
-	 * @param message the message to set
-	 */
+
 	public void setMessage(String message) {
 		this.message = message;
 	}
 
-	/**
-	 * @return the code
-	 */
-	public String getCode() {
+
+	public int getCode() {
 		return code;
 	}
 
-	/**
-	 * @param code the code to set
-	 */
-	public void setCode(String code) {
+
+	public void setCode(int code) {
 		this.code = code;
 	}
 
-	/**
-	 * @return the data
-	 */
+
 	public Object getData() {
 		return data;
 	}
 
-	/**
-	 * @param data the data to set
-	 */
+
 	public void setData(Object data) {
 		this.data = data;
 	}
 
-	/**
-	 * @return the multiData
-	 */
+
 	public HashMap<String, Object> getMultiData() {
 		return multiData;
 	}
 
-	/**
-	 * @param multiData the multiData to set
-	 */
+
 	public void setMultiData(HashMap<String, Object> multiData) {
 		this.multiData = multiData;
 	}
-	
+	public JsonData resetOption(ResultOptions option,String ... messages){
+		this.validataOption(option);
+		String rmsg = option.getMsg();
+		if (messages != null && messages.length > 0){
+			rmsg = messages[0];
+		}
+		this.code = option.getCode();
+		this.message = rmsg;
+		return this;
+	}
+	public JsonData data(String key,Object value){
+		this.multiData.put(key,value);
+		return this;
+	}
+	public JsonData data(Object value){
+		this.data = value;
+		return this;
+	}
+	public static  JsonData builder(ResultOptions option,String ... message){
+		return new JsonData(option,message);
+	}
+	public static JsonData builderSuccess(String ... message){
+		return new JsonData(DefaultResultOptions.SUCCESS,message);
+	}
+	public static JsonData builderException(String ... message){
+		return new JsonData(DefaultResultOptions.EXCEPTION,message);
+	}
+	public static JsonData builderMissParameter(String ... message){
+		return  new JsonData(DefaultResultOptions.MISSPARAMTER,message);
+	}
+	public static JsonData builderFail(String ... message){
+		return  new JsonData(DefaultResultOptions.FAIL,message);
+	}
+	public static JsonData builderOutTime(String ... message){
+		return  new JsonData(DefaultResultOptions.OUTTIME,message);
+	}
+	public String toString(){
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+
+	private void validataOption(ResultOptions option){
+		if (option == null || ! option.getClass().isEnum()){
+			throw  new RuntimeException("ResultOptions must be an enumeration and implement ResultOptions.");
+		}
+	}
 }
