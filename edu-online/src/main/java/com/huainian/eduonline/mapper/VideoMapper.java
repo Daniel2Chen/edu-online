@@ -1,8 +1,7 @@
 package com.huainian.eduonline.mapper;
 
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import com.huainian.eduonline.bean.entity.Video;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -15,8 +14,20 @@ import java.util.List;
 public interface VideoMapper {
 
     @Select("select * from video")
-    @Results({
-            @Result(column = "create_time",property = "createTime")
-    })
-    List<?> getAll();
+    List<Video> getAll();
+
+    @Select("select * from video where id = #{id}")
+    Video getVideoById(Integer id);
+
+    @Delete("delete from video where id = #{id}")
+    int deleteVideoById(Integer id);
+
+    @Update("update video set title = #{title} where id = #{id}")
+    int updateVideo(Video video);
+
+    @Insert("INSERT INTO `edu_online`.`video`" +
+            "( `title`)" +
+            " VALUES (#{title});")
+    @Options(useGeneratedKeys = true,keyColumn = "id",keyProperty = "id")
+    int insertVideo(Video video);
 }

@@ -17,7 +17,7 @@ public enum  DefaultResultOptions implements ResultOptions{
     private String msg;
     @Override
     public int getCode() {
-        return 0;
+        return this.code;
     }
     private DefaultResultOptions(int code,String msg){
        this.code = code;
@@ -26,6 +26,6 @@ public enum  DefaultResultOptions implements ResultOptions{
 
     @Override
     public String getMsg() {
-        return null;
+        return this.msg;
     }
 }

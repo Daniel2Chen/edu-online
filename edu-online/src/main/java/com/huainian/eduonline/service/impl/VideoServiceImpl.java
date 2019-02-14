@@ -1,5 +1,6 @@
 package com.huainian.eduonline.service.impl;
 
+import com.huainian.eduonline.bean.entity.Video;
 import com.huainian.eduonline.mapper.VideoMapper;
 import com.huainian.eduonline.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,27 @@ public class VideoServiceImpl implements VideoService {
     @Autowired
     private VideoMapper videoMapper;
     @Override
-    public List<?> getVideoList() {
+    public List<Video> getVideoList() {
         return videoMapper.getAll();
+    }
+
+    @Override
+    public Video getVideoById(Integer id) {
+        return videoMapper.getVideoById(id);
+    }
+
+    @Override
+    public int deleteVideo(Integer id) {
+        return videoMapper.deleteVideoById(id);
+    }
+
+    @Override
+    public int updateVideo(Video video) {
+        return videoMapper.updateVideo(video);
+    }
+
+    @Override
+    public int insertVideo(Video video) {
+        return videoMapper.insertVideo(video);
     }
 }
