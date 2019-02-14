@@ -1,40 +1,25 @@
-package com.huainian.eduonline.controller;
+package com.huainian.eduonline.controller.manage;
 
 import com.huainian.eduonline.bean.entity.Video;
 import com.huainian.eduonline.service.VideoService;
 import com.huainian.eduonline.utils.JsonData;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- * FileName: VideoController
+ * FileName: VideoManageController
  * Author: huainian.chen
- * Date: 2019/2/12 14:21
- * Description: 视频
+ * Date: 2019/2/14 18:05
+ * Description: 视频管理
  */
 @RestController
-@RequestMapping("api/v1/video")
-public class VideoController {
+@RequestMapping("manage/v1/video")
+public class VideoManageController {
     @Autowired
     private VideoService videoService;
-    @GetMapping("/listVideo")
-    public JsonData getVideoList(){
-        List<Video> videoList = videoService.getVideoList();
-        return (videoList !=null && videoList.size() > 0) ? JsonData.builderSuccess().data(videoList):JsonData.builderFail();
-    }
-    @GetMapping("/getVideoById")
-    public JsonData getVideoById(Integer id){
-        try {
-            Video video = videoService.getVideoById(id);
-            return JsonData.builderSuccess().data(video);
-        }catch (Exception e){
-            e.printStackTrace();
-            return JsonData.builderFail();
-        }
-    }
-
     @PutMapping("updateVideo")
     public JsonData updateVideo(Video video){
         try {
