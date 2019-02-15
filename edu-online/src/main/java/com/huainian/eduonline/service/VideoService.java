@@ -15,7 +15,7 @@ public interface VideoService {
      * 获取视频列表
      * @return
      */
-    List<Video> getVideoList();
+    List<Video> getVideoList(int offset,int limit);
 
     /**
      * 通过id获取视频

@@ -1,6 +1,7 @@
 package com.huainian.eduonline.mapper;
 
 import com.huainian.eduonline.bean.entity.Video;
+import com.huainian.eduonline.provider.VideoSqlProvider;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -22,7 +23,8 @@ public interface VideoMapper {
     @Delete("delete from video where id = #{id}")
     int deleteVideoById(Integer id);
 
-    @Update("update video set title = #{title} where id = #{id}")
+    //@Update("update video set title = #{title} where id = #{id}")
+    @UpdateProvider(type = VideoSqlProvider.class,method = "updateVideo")
     int updateVideo(Video video);
 
     @Insert("INSERT INTO `edu_online`.`video`" +

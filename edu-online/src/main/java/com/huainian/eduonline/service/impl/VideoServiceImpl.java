@@ -1,5 +1,6 @@
 package com.huainian.eduonline.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.huainian.eduonline.bean.entity.Video;
 import com.huainian.eduonline.mapper.VideoMapper;
 import com.huainian.eduonline.service.VideoService;
@@ -19,7 +20,8 @@ public class VideoServiceImpl implements VideoService {
     @Autowired
     private VideoMapper videoMapper;
     @Override
-    public List<Video> getVideoList() {
+    public List<Video> getVideoList(int offset,int limit) {
+        PageHelper.startPage(offset,limit,"create_time asc");
         return videoMapper.getAll();
     }
 
