@@ -3,6 +3,9 @@ package com.huainian.eduonline.utils;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  * FileName: VO
  * Author: huainian.chen
@@ -42,10 +45,12 @@ public class VO extends HashMap<String,Object> implements Serializable {
     }
 
     public <T> T toObject(Class<T> clazz) {
+    	ObjectMapper mapper = new ObjectMapper();
         try {
-            return JSON.parseObject(this.toString(), clazz);
-        } catch (Exception var3) {
-            throw var3;
+        	return mapper.readValue(this.toString(), clazz);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -54,7 +59,13 @@ public class VO extends HashMap<String,Object> implements Serializable {
     }
 
     public String toString() {
-        return JSON.toJSONString(this);
+    	ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return "";
     }
 
 }
