@@ -35,16 +35,6 @@ public class WechatConfig implements Serializable{
 	 */
 	private final static String OPEN_USER_INFO_URL = "https://api.weixin.qq.com/sns/userinfo?access_token=%s&openid=%s&lang=zh_CN";
 	/**
-	 * 公众号appid
-	 */
-	@Value("${wxpay.appid}")
-	private String appId;
-	/**
-	 * 公众号秘钥
-	 */
-	@Value("${wxpay.appsecret}")
-	private String appSecret;
-	/**
 	 * 开放平台appid
 	 */
 	@Value("${wxopen.appid}")
@@ -59,6 +49,41 @@ public class WechatConfig implements Serializable{
 	 */
 	@Value("${wxopen.redirect_url}")
 	private String openRedirectUrl;
+	
+	/**
+	 * 公众号appid
+	 */
+	@Value("${wxpay.appid}")
+	private String appId;
+	/**
+	 * 公众号秘钥
+	 */
+	@Value("${wxpay.appsecret}")
+	private String appSecret;
+	
+	/**
+	 * 商户号
+	 */
+	@Value("${wxpay.mer_id}")
+	private String mchId;
+	
+	/**
+	 * 微信支付秘钥
+	 */
+	@Value("${wxpay.key}")
+	private String key;
+	
+	/**
+	 * 微信支付回调地址  http://api.xdclass.net/pay/unifiedorder
+	 */
+	@Value("${wxpay.callback}")
+	private String payCallbackUrl;
+	
+	/**
+	 * 统一下单url https://api.mch.weixin.qq.com/pay/unifiedorder(官方地址)
+	 * http://api.xdclass.net/pay/unifiedorder(虚拟的)
+	 */
+	private static String  UNIFIED_ORDER_URL = "http://api.xdclass.net/pay/unifiedorder";
 	
 	/**
 	 * @return the openQrcodeUrl
@@ -77,6 +102,18 @@ public class WechatConfig implements Serializable{
 	 */
 	public static String getOpenUserInfoUrl() {
 		return OPEN_USER_INFO_URL;
+	}
+	/**
+	 * @return the uNIFIED_ORDER_URL
+	 */
+	public static String getUNIFIED_ORDER_URL() {
+		return UNIFIED_ORDER_URL;
+	}
+	/**
+	 * @param uNIFIED_ORDER_URL the uNIFIED_ORDER_URL to set
+	 */
+	public static void setUNIFIED_ORDER_URL(String uNIFIED_ORDER_URL) {
+		UNIFIED_ORDER_URL = uNIFIED_ORDER_URL;
 	}
 
 }

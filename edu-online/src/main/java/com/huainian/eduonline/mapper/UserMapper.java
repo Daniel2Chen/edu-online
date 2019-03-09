@@ -11,6 +11,17 @@ import com.huainian.eduonline.bean.entity.User;
 public interface UserMapper {
 	
 	/**
+	 * 
+	 * @Description: 通过id查找用户信息
+	 * @Title: getUserById      
+	 * @param id
+	 * @return           
+	 * @throws
+	 */
+	@Select("select * from user where id = #{id}")
+	User getUserById(@Param("id") int id);
+	
+	/**
      * 根据openid查找
      * @param openid
      * @return

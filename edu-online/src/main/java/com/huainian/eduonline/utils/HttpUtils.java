@@ -38,13 +38,13 @@ public class HttpUtils {
 	 * @throws
 	 * @Description:
 	 */
-	public static Map<String, Object> doGet(String url) {
+	public static Map<String, Object> doGet(String url,int timeout) {
 		
 		Map<String, Object> map = new HashMap<>();
 		//创建HttpClient
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 		//请求配置
-		RequestConfig requestConfig = requestConfig();
+		RequestConfig requestConfig = requestConfig(timeout);
 				
 		HttpGet httpGet = new HttpGet(url);
 		httpGet.setConfig(requestConfig);
@@ -79,11 +79,11 @@ public class HttpUtils {
 	 * @throws
 	 * @Description:
 	 */
-	public static String doPost(String url,String data) {
+	public static String doPost(String url,String data,int  timeout) {
 		//创建HttpClient
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 		//配置请求
-		RequestConfig requestConfig = requestConfig();
+		RequestConfig requestConfig = requestConfig(timeout);
 		
 		HttpPost httpPost = new HttpPost(url);
 		httpPost.setHeader("Content-Type","text/html; chartset=UTF-8");
@@ -120,10 +120,10 @@ public class HttpUtils {
 	 * @throws
 	 * @Description:
 	 */
-	private static RequestConfig requestConfig() {
-		RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(5000)//设置连接超时
-				.setConnectionRequestTimeout(5000)//设置请求超时
-				.setSocketTimeout(5000)
+	private static RequestConfig requestConfig(int timeout) {
+		RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(timeout)//设置连接超时
+				.setConnectionRequestTimeout(timeout)//设置请求超时
+				.setSocketTimeout(timeout)
 				.setRedirectsEnabled(true)//允许自动重定向
 				.build();
 		return requestConfig;

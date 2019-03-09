@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
 	public User saveWechatUser(String code) {
 		String accessTokenUrl = String.format(wechatConfig.getOpenAccessTokenUrl(), 
 				wechatConfig.getOpenAppId(),wechatConfig.getOpenAppSecret(),code);
-		Map<String, Object> baseMap = HttpUtils.doGet(accessTokenUrl);
+		Map<String, Object> baseMap = HttpUtils.doGet(accessTokenUrl,400);
 		if (baseMap == null || baseMap.isEmpty()) {
 			return null;
 		}
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 		}
 		String userInfoUrl = String.format(wechatConfig.getOpenUserInfoUrl(), 
 				accessToken,openId);
-		Map<String, Object> baseUserMap = HttpUtils.doGet(userInfoUrl);
+		Map<String, Object> baseUserMap = HttpUtils.doGet(userInfoUrl,400);
 		if (baseUserMap == null || baseUserMap.isEmpty()) {
 			return null;
 		}
