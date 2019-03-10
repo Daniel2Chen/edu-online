@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -32,9 +34,14 @@ public class VideoOrderServiceImpl implements VideoOrderService {
 	private  VideoOrderMapper VideoOrderMapper;
 	@Autowired
 	private WechatConfig weChatConfig;
+	
+	private static final  Logger dataLogger  = LoggerFactory.getLogger("dataLogger");
+	
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
 	public String saveOrder(VideoOrder videoOrder1) throws Exception {
+		
+		dataLogger.info("module=video_order`api=save`user_id={}`video_id={}",videoOrder1.getUserId(),videoOrder1.getVideoId());
 		//查找视频
 		Video video = videoMapper.getVideoById(videoOrder1.getVideoId());
 		//查找用户
