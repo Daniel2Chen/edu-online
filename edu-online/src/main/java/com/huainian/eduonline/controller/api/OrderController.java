@@ -23,9 +23,10 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.huainian.eduonline.bean.entity.VideoOrder;
 import com.huainian.eduonline.service.VideoOrderService;
+import com.huainian.eduonline.utils.IpUtils;
 
 @RestController
-@RequestMapping("/api/v1/order")
+@RequestMapping("/user/api/v1/order")
 public class OrderController {
 	
 	@Autowired
@@ -35,11 +36,14 @@ public class OrderController {
 	public void saveOrder(@RequestParam(value="video_id",required=true) Integer videoId,
 			HttpServletResponse response,
 			HttpServletRequest request) throws Exception{
+		String ip = IpUtils.getIpAddr(request);
+		Integer userId = (Integer) request.getAttribute("userId");
 		VideoOrder videoOrder = new VideoOrder();
 		videoOrder.setVideoId(videoId);
-		videoOrder.setIp("218.87.100.10");
-		videoOrder.setUserId(1);
+		videoOrder.setIp(ip);
+		videoOrder.setUserId(userId);
 		String codeUrl = videoOrderService.saveOrder(videoOrder);
+		System.out.println(codeUrl);
 		if (null == codeUrl) {
 			throw new NullPointerException();
 		}

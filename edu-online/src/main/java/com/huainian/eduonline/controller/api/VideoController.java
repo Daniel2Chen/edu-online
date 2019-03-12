@@ -25,7 +25,7 @@ public class VideoController {
                                  @RequestParam(value = "size",defaultValue = "5")Integer size){
         List<Video> videoList = videoService.getVideoList(page,size);
         PageInfo pageInfo = new PageInfo(videoList);
-        return (videoList !=null && videoList.size() > 0) ? JsonData.builderSuccess().data(pageInfo):JsonData.builderFail();
+        return (videoList !=null && videoList.size() > 0) ? JsonData.builderSuccess().data(pageInfo.getList()):JsonData.builderFail();
     }
     @GetMapping("/getVideoById")
     public JsonData getVideoById(Integer id){
